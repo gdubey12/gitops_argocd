@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deploy
+spec:
+  selector:
+    matchLabels:
+      app: flask-myapp
+  template:
+    metadata:
+      labels:
+        app: flask-myapp
+    spec:
+      containers:
+      - name: flask-app-container
+        image: gaurav0524/gitops_argo_app:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
