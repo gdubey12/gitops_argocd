@@ -20,8 +20,15 @@ pipeline {
             steps {
                 script {
                     git credentialsId: 'github',
-                    url: 'https://github.com/gdubey12/gitops_argocd_project.git',
+                    url: 'https://github.com/gdubey12/gitops_argocd.git',
                     branch: 'main'
+                }
+            }
+        }
+        stage('Build Docker Image'){
+            stage{
+                script{
+                    docker_image = docker.build ${IMAGE_NAME}
                 }
             }
         }
