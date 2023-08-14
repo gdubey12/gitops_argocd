@@ -1,0 +1,29 @@
+pipeline {
+    agent any 
+
+    environment {
+        DOCKERHUB_USERNAME = "gaurav0524"
+        APP_NAME = "gitops_argo_app"
+        IMAGE_TAG = "${BUID_NUMBER}"
+        IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}" 
+        REGISTRY_CREDS = 'dockerhub'
+    }
+    stages {
+        stage('CleanUp Workspace'){
+            steps {
+                script {
+                    cleanWs()
+                }
+            }
+        }
+        stage('Checkout_SCM'){
+            steps {
+                script {
+                    git credentialsId: 'github',
+                    url: 'https://github.com/gdubey12/gitops_argocd_project.git',
+                    branch: 'main'
+                }
+            }
+        }
+    }
+}
